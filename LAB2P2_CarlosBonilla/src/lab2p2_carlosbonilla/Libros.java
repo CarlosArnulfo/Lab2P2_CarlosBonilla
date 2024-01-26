@@ -22,6 +22,10 @@ public class Libros {
         this.lanzamiento=lanzamiento;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public void setAutor(String autor) {
         this.autor = autor;
     }
@@ -40,6 +44,10 @@ public class Libros {
 
     public int getLanzamiento() {
         return lanzamiento;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
     public String getDisponibilidad() {

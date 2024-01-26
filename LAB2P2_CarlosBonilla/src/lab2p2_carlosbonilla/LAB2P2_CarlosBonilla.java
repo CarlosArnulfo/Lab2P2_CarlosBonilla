@@ -24,14 +24,20 @@ public class LAB2P2_CarlosBonilla {
         Scanner sc = new Scanner(System.in);
         Scanner input = new Scanner(System.in);
         ArrayList<Usuarios> usuarios = new ArrayList();
-        usuarios.add(new Usuarios("Mark", "pedrito222", "docente"));
-        usuarios.add(new Usuarios("Osman", "666", "estudiante"));
-        usuarios.add(new Usuarios("Luis", "mimamamemima", "estudiante"));
-        usuarios.add(new Usuarios("Ana", "fortnite", "docente"));
+        usuarios.add(new Usuarios("Parangutirimicuaro", "parangutirimicuaro", "Bibliotecario"));//USERS
+        usuarios.add(new Usuarios("Miguel", "mipanamiguel", "Bibliotecario"));
+        usuarios.add(new Usuarios("Mark", "pedrito222", "Docente"));
+        usuarios.add(new Usuarios("Osman", "666", "Estudiante"));
+        usuarios.add(new Usuarios("Luis", "mimamamemima", "Estudiante"));
+        usuarios.add(new Usuarios("Ana", "fortnite", "Docente"));
         int menu = 0;
         String NUsuario = "";
 
         do {
+            int submenuEdicion=0;
+            int menuLibros=0;
+            int menuEdicion=0;
+            int recursoAEditar=0;
             int menuBiblioteca=0;
             int menuCrear = 0;
             Usuarios user = new Usuarios("", "", "");
@@ -39,7 +45,7 @@ public class LAB2P2_CarlosBonilla {
             boolean permitAccess = false;
             boolean existeUsuario = false;
             do {
-                System.out.println("Bienvenido a la Universidad Virtual de UNITEC");
+                System.out.println("Bienvenido a la Universidad Virtual de UNITEC");//LOGGIN
                 System.out.println("favor ingresar usuario y contraseña");
                 System.out.println("INGRESE SU NOMBRE DE USUARIO");
                 NUsuario = sc.nextLine();
@@ -69,7 +75,7 @@ public class LAB2P2_CarlosBonilla {
             do {
                 System.out.println("1: Listar recursos");
                 System.out.println("2: Crear Recursos (SOLO DOCENTES Y PERSONAL DE LIBRERIA)");
-                System.out.println("3: Editar Recursos (SOLAMENTE PERSONAL DE LIBRERIA");
+                System.out.println("3: Editar Recursos (SOLAMENTE PERSONAL DE LIBRERIA");//OPCIONES DE QUE HACER
                 System.out.println("4: Cerrar la sesion");
                 System.out.println("0. Cerrar el programa");
                 menu = input.nextInt();
@@ -79,7 +85,7 @@ public class LAB2P2_CarlosBonilla {
                         break;
                     case (2):
                         if (user.getTipo().equals("Estudiante")) {
-                            System.out.println("LOS ESTUDIANTES NO TIENEN ACCESO A LA CREACION DE OBJETOS");
+                            System.out.println("LOS ESTUDIANTES NO TIENEN ACCESO A LA CREACION DE OBJETOS");//SOLO LOS BIBLIOTECARIOS Y DOCENTES TIENEN ACCESO AL CREADOR
                         } else {
                             System.out.println("desea");
                             System.out.println("1. Crear un libro");
@@ -89,7 +95,7 @@ public class LAB2P2_CarlosBonilla {
                             menuCrear = input.nextInt();
                         }
 
-                        switch (menuCrear) {
+                        switch (menuCrear) {//CREADOR DE OBJETOS DIVERSO
                             case (1):
                                 System.out.println("Ingrese el nombre del libro");
                                 String nombreLibro = sc.nextLine();
@@ -172,15 +178,100 @@ public class LAB2P2_CarlosBonilla {
                         }
                         break;
                     case (3):
-                        if(user.getTipo().equals("bibliotecario")){
+                        if(user.getTipo().equals("Bibliotecario")){
                             menuBiblioteca=0;
                             System.out.println("1. Editar recurso");
                             System.out.println("2. Borrar recurso");
                         }else{
                             System.out.println("ESTA OPCION ES DE USO EXCLUSIVO PARA BIBLIOTECARIOS");
                         }
-                        switch (menuBiblioteca){
+                        switch (menuBiblioteca) {
                             case 1:
+                                recursoAEditar = 0;
+                                System.out.println("ingrese el numero indice del recurso que desee editar");//EDITORES DE OBJETOS, SOLO SE PUEDEN EDITAR LIBROS Y CURSOS
+                                recursoAEditar = input.nextInt();
+                                if (recursoAEditar >= 0 && recursoAEditar < listaDeCosos.size()) {
+                                    if (listaDeCosos.get(recursoAEditar) instanceof Libros) {
+                                        System.out.println("¿Que desea editar de este libro?");
+                                        System.out.println("1. Autor");
+                                        System.out.println("2. Titulo");
+                                        System.out.println("3. Año de publicacion");
+                                        switch(submenuEdicion){
+                                            case 1:
+                                                System.out.println("¿Que nuevo autor desea agregarle al libro?");
+                                                String nuevoAutor=sc.nextLine();
+                                                Libros libroAEditar=(Libros)(listaDeCosos.get(recursoAEditar));
+                                                libroAEditar.setAutor(nuevoAutor);
+                                                listaDeCosos.add(recursoAEditar, libroAEditar);
+                                                listaDeCosos.remove(recursoAEditar-1);
+                                                break;
+                                            case 2:System.out.println("¿Que nuevo titulo quiere darle al libro?");
+                                            String nuevoTitulo=sc.nextLine();
+                                                Libros libroAEditarTITULO=(Libros)(listaDeCosos.get(recursoAEditar));
+                                                libroAEditarTITULO.setNombre(nuevoTitulo);
+                                                listaDeCosos.add(recursoAEditar, libroAEditarTITULO);
+                                                listaDeCosos.remove(recursoAEditar-1);
+                                                break;
+                                            case 3:
+                                                System.out.println("Ingrese el nuevo año de lanzamiento que quiere darle al libro");
+                                                int anoNuevo=input.nextInt();
+                                                Libros libroAEditarFECHA=(Libros)(listaDeCosos.get(recursoAEditar));
+                                                libroAEditarFECHA.setLanzamiento(anoNuevo);
+                                                listaDeCosos.add(recursoAEditar, libroAEditarFECHA);
+                                                listaDeCosos.remove(recursoAEditar-1);
+                                                break;
+                                        }
+                                    }else if(listaDeCosos.get(recursoAEditar) instanceof Cursos){
+                                       System.out.println("¿Que desea editar de este curso?");
+                                        System.out.println("1. Titulo");
+                                        System.out.println("2. Instructor");
+                                        System.out.println("3. Duracion");
+                                        System.out.println("4. Plataforma");
+                                        switch (submenuEdicion) {
+                                            case 1:
+                                                System.out.println("¿Que nuevo Titulo quiere darle a este curso?");
+                                                String nuevoTituloCurso = sc.nextLine();
+                                                Cursos cursoAEditar = (Cursos) (listaDeCosos.get(recursoAEditar));
+                                                cursoAEditar.setTitulo(nuevoTituloCurso);
+                                                listaDeCosos.add(recursoAEditar, cursoAEditar);
+                                                listaDeCosos.remove(recursoAEditar-1);
+                                                break;
+                                            case 2:
+                                                System.out.println("¿Que nuevo Instructor quiere darle a este curso?");
+                                                String nuevoInstructorCurso = sc.nextLine();
+                                                Cursos cursoAEditarINSTRUCTOR = (Cursos) (listaDeCosos.get(recursoAEditar));
+                                                cursoAEditarINSTRUCTOR.setInstructor(nuevoInstructorCurso);
+                                                listaDeCosos.add(recursoAEditar, cursoAEditarINSTRUCTOR);
+                                                listaDeCosos.remove(recursoAEditar-1);
+                                                break;
+                                            case 3:
+                                                System.out.println("¿Que nueva duracion EN SEMANAS quiere asignarle a este curso?");
+                                                int nuevoTiempoCurso = sc.nextInt();
+                                                Cursos cursoAEditarTIEMPO = (Cursos) (listaDeCosos.get(recursoAEditar));
+                                                cursoAEditarTIEMPO.setDuracion(nuevoTiempoCurso);
+                                                listaDeCosos.add(recursoAEditar, cursoAEditarTIEMPO);
+                                                listaDeCosos.remove(recursoAEditar-1);
+                                                break;
+                                            case 4:
+                                                System.out.println("¿Que nueva plataforma quiere añadirle a este curso?");
+                                                String nuevaPlataformaCurso = sc.nextLine();
+                                                Cursos cursoAEditarPLATAFORMA = (Cursos) (listaDeCosos.get(recursoAEditar));
+                                                cursoAEditarPLATAFORMA.setInstructor(nuevaPlataformaCurso);
+                                                listaDeCosos.add(recursoAEditar, cursoAEditarPLATAFORMA);
+                                                listaDeCosos.remove(recursoAEditar-1);
+                                                break;
+                                                
+                                                
+                                        }
+                                    } else if (listaDeCosos.get(recursoAEditar) instanceof Articulos) {
+
+                                    }else if(listaDeCosos.get(recursoAEditar) instanceof Conferencias){
+                                        
+                                    }
+
+                                } else {
+                                    System.out.println("El indice ingresado no pertenece a ningun recurso disponible");
+                                }
                                 break;
                             case 2:
                                 int recursoABorrar=0;
@@ -192,6 +283,8 @@ public class LAB2P2_CarlosBonilla {
                                     System.out.println("El indice ingresado no pertenece a ningun recurso disponible");
                                 }
                                 break;
+                            default:
+                                System.out.println("Elija una opcion Valida");
                         }
                         break;
                     default:
@@ -202,7 +295,7 @@ public class LAB2P2_CarlosBonilla {
 
     }
 
-    public static boolean EncontrarUsuario(ArrayList<Usuarios> listaUsuarios, String NUsuario, int i) {
+    public static boolean EncontrarUsuario(ArrayList<Usuarios> listaUsuarios, String NUsuario, int i) {//METODOS
         if (i > 3) {
             return false;
         } else if (listaUsuarios.get(i).getNombre().equals(NUsuario)) {
