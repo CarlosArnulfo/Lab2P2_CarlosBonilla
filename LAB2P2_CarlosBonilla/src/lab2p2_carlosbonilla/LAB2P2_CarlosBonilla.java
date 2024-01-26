@@ -183,7 +183,14 @@ public class LAB2P2_CarlosBonilla {
                             case 1:
                                 break;
                             case 2:
-                                
+                                int recursoABorrar=0;
+                                System.out.println("ingrese el numero indice del recurso que desee borrar");
+                                recursoABorrar=input.nextInt();
+                                if(recursoABorrar>=0&&recursoABorrar<listaDeCosos.size()){
+                                    listaDeCosos.remove(recursoABorrar);
+                                }else{
+                                    System.out.println("El indice ingresado no pertenece a ningun recurso disponible");
+                                }
                                 break;
                         }
                         break;
